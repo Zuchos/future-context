@@ -56,7 +56,10 @@ class Futures_2 extends FlatSpec {
     */
 
   /**
-  * Q: How about our refactoring? Would it help to use blocking and global execution context?
+    * Q: How about our refactoring? Would it help to use blocking and global execution context?
+    */
+
+  /**
   * A: Kind of ... we won't deadlock/block program from running by performing blocking operations (e.g. hadoop read/writes). But we can still slow it down (but not as much as before).
   * We may also slow down other parts of application/platform since the global execution context is used by other components.
   */

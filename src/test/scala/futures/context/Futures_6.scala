@@ -4,6 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.FlatSpec
 
 import java.util.concurrent.Executors
+import scala.collection.immutable
 import scala.concurrent._
 import scala.concurrent.duration._
 
@@ -14,14 +15,14 @@ class Futures_6 extends FlatSpec with LazyLogging {
     */
   it should "Pitfall 6" in {
     implicit val ec =
-      ExecutionContext.fromExecutor(Executors.newFixedThreadPool(2))
-    lazy val future1 =
+      ExecutionContext.fromExecutor(Executors.newFixedThreadPool(1))
+    val future2 = Future { logger.info("Ooops, We did it again!") }
+    val future1 =
       for {
         _ <- TestService.threadSleep(10, 1)
       } yield {
         logger.info("We did it!")
       }
-    lazy val future2 = Future { logger.info("Ooops, We did it again!") }
     for {
       _ <- future1
       _ <- future2

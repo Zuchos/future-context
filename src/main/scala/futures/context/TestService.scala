@@ -15,7 +15,7 @@ object TestService extends LazyLogging {
       !(2 until i).exists(x => i % x == 0)
   }
 
-  def calculatePrimes(jobId: Int, till: Int = Int.MaxValue)(
+  def calculatePrimes(jobId: Int, till: Int = 10000)(
     implicit executionContext: ExecutionContext
   ): Future[Seq[Int]] = {
     Future {
@@ -31,9 +31,7 @@ object TestService extends LazyLogging {
   ): Future[Unit] = {
     Future {
       logger.info(s"$jobId - Staring sleeping thread")
-      (1 to numberOfSec).foreach { _ =>
-        Thread.sleep(1000)
-      }
+      Thread.sleep(1000 * numberOfSec)
       logger.info(s"$jobId - Finished")
     }
   }
